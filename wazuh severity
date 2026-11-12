@@ -1,0 +1,68 @@
+Levels 0–3 → "Just logs"
+
+Normal system behavior.
+Example:
+
+*User logged in
+
+*Service started
+
+*Cron job ran
+
+SOC action: Ignore / archive
+------------------------------------------------------------------
+Levels 4–6 → "Something changed"
+
+Not necessarily bad, but worth knowing.
+
+Examples:
+
+*File modified
+
+*New process started
+
+*USB plugged in
+
+SOC action: Review if unexpected
+-------------------------------------------------------------------------
+Levels 7–9 → "Suspicious"
+
+Looks like an attack pattern, but not confirmed.
+
+Examples:
+
+*3 failed SSH logins
+
+*Port scan detected
+
+*New admin command
+
+SOC action: Investigate
+------------------------------------------------------------------------------
+ Levels 10–12 → "Confirmed attack"
+
+This is where real incidents begin.
+
+Examples:
+
+*SSH brute force
+
+*Web attack signature
+
+*Privilege escalation
+
+SOC action: Incident response
+------------------------------------------------------------------------------
+Levels 13–15 → "Critical breach"
+
+System is probably compromised.
+
+Examples:
+
+Rootkit found
+
+Malware detected
+
+System binary modified
+
+SOC action:
