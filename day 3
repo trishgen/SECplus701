@@ -1,0 +1,115 @@
+credentials wazuh:
+root
+C1sc0123
+
+systemctl stop firewalld
+ip addr
+
+https://208.8.8.179
+admin
+C1sc0123..
+
+
+credentials elastic vm:
+root
+C1sc0123
+
+elastic gui cred:
+systemctl restart elasticsearch.service
+ip addr
+
+
+f1k:
+enable
+conf t
+int g1
+ip addr dhcp
+no shut
+end
+sh ip int bri
+
+securecrt ssh - ip add from f1k
+conf t
+logging on
+logging host 208.8.8.136 transport udp port 9001
+logging trap informational
+end
+-------------------------------------------
+conf t
+archive
+log config
+logging enable
+notify syslog
+end
+---------------------------------------------
+conf t
+login on-failure log
+login on-success log
+end
+-------------------------------------
+##remove ping and disable ssh
+config t
+access-list 100 deny ip any host 208.8.8.136 log
+access-list 100 permit ip any any
+interface GigabitEthernet1
+ip access-group 100 in
+end
+
+###get back the ping and able to ssh again
+config t
+interface GigabitEthernet0/0
+no ip access-group 100 in
+end
+
+------------------
+jumpserver
+root
+C1sc0123
+
+ip -4 addr
+
+gui:
+192.168.102.100:4000
+admin
+C1sc0123
+------------------------------------
+!@COREBABA
+config t
+ip domain-name rivanit.com
+username admin privilege 15 secret pass
+username tricia privilege 15 secret pass
+crypto key generate rsa
+
+How many bits in the modulus [512]: 2048
+
+ip ssh version 2
+line vty 0 14
+login local
+transport input ssh
+end
+---------------------------------
+i@zabbix
+root
+zabbix
+
+systemctl restart zabbix-server
+dnf install net-snmp-utils -y
+
+gui creds
+208.8.8.138
+Admin
+zabbix
+
+ip addr
+-------------------------------------
+!@put in for snmpV2 CSR1000V
+conf t
+access-list 10 permit 192.168.1.10
+snmp-server community public RO 10
+end
+
+!@!@ SNMPV3 csr1000v
+conf t
+snmp-server group zabbix v3 priv
+snmp-server user admin zabbix v3 auth sha C1sc0123 priv aes 128 C1sc0123
+end
